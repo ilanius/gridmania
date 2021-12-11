@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>GridMania</title>
         <style>
-            .topGrid {
+            div.topGrid {
                 height: 800px;
-                width: 100%;
+                width: 90%;
                 margin: auto;
-                margin-top: 0px;
-                border: 1px black solid;
+                margin-top: 0;
+                border: 4px black solid;
                 background-color: transparent;
-                display: grid;
-                grid-gap: 0px;
-                grid-template-columns: 1fr 1fr 2fr;
-                grid-template-rows: 1fr 1fr 2fr;
                 /* overflow: hidden; */
                 font-size: 1em;
             }
             .grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr 2fr;
-                grid-template-rows: 1fr 1fr 2fr;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
                 width: 100%;
                 height: 100%;
                 border: 0px dashed gray;
+                margin: 0;
                 grid-gap: 0px;
                 font-size: 0px;
             }
@@ -31,17 +29,19 @@
                 margin: 0;   
                 padding: 0;
             }
-            .red { background-color: red; }
+            .red    { background-color: red; }
             .yellow { background-color: yellow;  }
             .orange { background-color: orange;}
-            .green { background-color: green; }
+            .green  { background-color: green; }
 
-            .blue  { background-color: blue; }
-            .brown { background-color: brown;}
-            .white { background-color: white;}
+            .blue   { background-color: blue; }
+            .navy   { background-color: navy; }
+            .brown  { background-color: brown;}
+            .white  { background-color: white;}
 
-            .black { background-color: black;}
-            .image { background-image: url('');}
+            .black  { background-color: black;}
+            .image  { background-image: url('');}
+            .tran   { background-color: transparent; }
             .grad { 
                 /* complicated */
                 background: rgb(102,181,59);
@@ -57,22 +57,20 @@
         <script>
 
             var classes = [ 
-                'yellow',  'orange',    'green', 
-                'blue',    'grad span',                  'white',
-                'red',                         'image',   'grad' ];
+                'yellow',   'orange',     'white',    
+                'red',      'grad',       'red',
+                'white',    'orange',     'yellow' ];
 
             function gridMania( depth) {
                 // 3 x 3 grid
-                if ( depth > 4 ) return 'Depth too big. Greater than 4'
-                if ( depth <= 0 ) return '&nbsp;';
+                var maxDepth = 4;
+                if ( depth > maxDepth ) return 'Depth too big. Greater than ' + maxDepth;
+                if ( depth <= 0 || Math.random() > 0.95 ) return '&nbsp;';
                 var str = '';
-                for ( var j = 0; j < 3; j++ ) {
-                    for ( var i = 0; i < 3; i++ ) {
-                        if ( i + j > 2 ) continue;
-                        str += "<span class='" + classes[3*j+1*i]+ " grid'>"
+                for ( var j = 0; j < classes.length; j++ ) {
+                        str += "<span class='" + classes[j]+ " grid'>"
                         str += gridMania( depth - 1 );
                         str += "</span>";
-                    }
                 }
                 return str;
             }
@@ -87,7 +85,7 @@
         <h1>Grid Mania</h1>
         <p>
         Functions can call other functions and they can call themselves too.<br>
-        Sometimes to great effect.
+        Sometimes to great effect. Grid with random holes.
         </p>
         <p> Select grid depth: 
         <select name="depth" onchange="updateGrid( this);">
@@ -99,7 +97,7 @@
             <option value="5"> 5 </option>
         </select>
         
-        <div id="topGrid" class="topGrid ">
+        <div id="topGrid" class="grid topGrid ">
         </div>
         </p>
         
